@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { GoogleMap, useLoadScript, DrawingManager, Marker} from '@react-google-maps/api'
+import DrawingComponent from './DrawingComponent'
 
 
 const libraries = ['drawing']
@@ -22,8 +23,8 @@ const Map = () => {
         time : new Date()
     }])
   }, [])
-    
 
+    
   const renderMap = () => (
         <GoogleMap
           mapContainerStyle={{
@@ -40,7 +41,7 @@ const Map = () => {
               position={{lat: marker.lat, lng: marker.lng}}     
               />
             )))};
-            <DrawingManager />
+            <DrawingComponent/>
         </GoogleMap>
   )
 
