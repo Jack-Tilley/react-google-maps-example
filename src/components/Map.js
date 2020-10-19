@@ -1,14 +1,17 @@
 import React, { useState, useCallback } from 'react'
 import { GoogleMap, useLoadScript, DrawingManager, Marker} from '@react-google-maps/api'
-import DrawingComponent from './DrawingComponent'
-
+import CBTree from './CBTree'
 
 const libraries = ['drawing']
+const options = {
+  disableDefaultUI: true,
+  zoomControl: true,
+}
 
 const Map = () => {
   const [ myMap, setMyMap ] = useState(null);
-  const [ center, setCenter ] = useState({ lat: 29.972065, lng: -90.111533 });
-  const [ markers, setMarkers ] = useState([]);
+  const [ center, setCenter ] = useState({ lat: 39.9526, lng: -75.1652 });
+  // const [ markers, setMarkers ] = useState([]);
 
 
   const { isLoaded } = useLoadScript({
@@ -16,36 +19,29 @@ const Map = () => {
     libraries,
   });
 
-  const onMapClick = useCallback((e) => {
-    setMarkers(current => [...current, {
-        lat: e.latLng.lat(),
-        lng : e.latLng.lng(),
-        time : new Date()
-    }])
-  }, [])
-
     
   const renderMap = () => (
+    <>
+        <div className="treeContainer">
+          <CBTree/>
+        </div>
         <GoogleMap
           mapContainerStyle={{
             width: "100%",
-            height: "100%"
+            height: "100%",
           }}
           zoom={10}
           center={center}
           onLoad={map => setMyMap(map)}
-          onClick={onMapClick}
+          options={options}
         >
-            {markers.map((marker => (<Marker 
-              key={marker.time.toISOString()} 
-              position={{lat: marker.lat, lng: marker.lng}}     
-              />
-            )))};
-            <DrawingComponent/>
+            {/* <DrawingComponent/> */}
         </GoogleMap>
+    </>
   )
 
   return isLoaded ? renderMap() : null;
 }
+
 
 export default Map
