@@ -15,36 +15,35 @@ const Map = () => {
   const [ center, setCenter ] = useState({ lat: 39.9526, lng: -75.1652 });
   const [markers, setMarkers] = React.useState([]);
   const [addItemIsActive, setAddItemIsActive] = useState(false)
+  const [dM, setDM] = useState(null)
   
-  const onMapClick = useCallback((e) => {
-    console.log('MAP CLICKED FOR MARKER')
-      setMarkers((current) => [
-        ...current,
-        {
-          lat: e.latLng.lat(),
-          lng: e.latLng.lng(),
-          time: new Date(),
-        },
-      ]
-      );
-      console.log(markers)
-    }, [markers]);
-
-  const updateAddItemIsActive = (addItemIsActive) => {
-    console.log('ITEM ADD IS NOW ACTIVE')
-    setAddItemIsActive(!addItemIsActive)
-  }
-
-
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-    
+
+  const updateDM = () => {
+    dM ? setDM(null): setDM(<DrawingManager />)
+    console.log(dM)
+  }
+  const displayDM = () => {
+    console.log('DISPLAY DM')
+    return(
+      <DrawingManager />
+    )
+}
+
+const dmoptions = {
+  drawingControl: true,
+  drawingControlOptions: {
+    position: 'TOP_CENTER'
+
+  }
+}
   const renderMap = () => (
     <>
         <div className="treeContainer">
-          <SiteTree addItemIsActive={addItemIsActive} updateAddItemIsActive={updateAddItemIsActive}/>
+          <SiteTree updateDM={updateDM} dM={dM} displayDM={displayDM}/>
         </div>
         <GoogleMap
           mapContainerStyle={{
@@ -54,15 +53,10 @@ const Map = () => {
           zoom={10}
           center={center}
           onLoad={map => setMyMap(map)}
-          onClick={(e) => addItemIsActive ? onMapClick(e) : null}
+          // onClick={(e) => addItemIsActive ? onMapClick(e) : null}
           options={options}
         >
-            {markers.map((marker) => (
-          <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-          />
-        ))}
+          {dM ? <DrawingManager options={options}/> :null}
         </GoogleMap>
         {/* <BasicTree/> */}
     </>

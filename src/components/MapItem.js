@@ -1,18 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import { Marker } from '@react-google-maps/api'
 
-const MapItem = ({isRendered=false, mynodes, target, updateNodes}) => {
+const MapItem = ({isRendered=false, mynodes, target, updateNodes, updateDM, displayDM}) => {
     const [itemType, setItemType] = useState()
     const [name, setName] = useState('')
     
     const addItem = () => {
+        // updateDM()
         let newNode = {
                 value: name,
                 label: name,
                 data: {info: itemType},
                 // icon: <FontAwesomeIcon icon={faHome} />,
         }
-        
+
         updateNodes(mynodes.map(item => 
             item.children === target.parent.children
             ? {...item, children : target.parent.children.concat(newNode)} 
@@ -35,9 +36,11 @@ const MapItem = ({isRendered=false, mynodes, target, updateNodes}) => {
     return(
         isRendered ?
       <div className="itemAdditionContainer">
+          <div>{displayDM()}</div>
         <input type="text" placeholder="Name" onChange={e => setName(e.target.value)} />
-        <button onClick={handleSubmitMarker}>MARKER</button>
-        <button onClick={handleSubmitPolyline}>POLYLINE</button>
+        
+        {/* <button onClick={handleSubmitMarker}>MARKER</button>
+        <button onClick={handleSubmitPolyline}>POLYLINE</button> */}
       </div>
       : null
     )

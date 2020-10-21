@@ -15,7 +15,7 @@ body {
   
   div.treeContainer {
     position: absolute;
-    top: 1rem;
+    top: 6rem;
     left: 1rem;
     background-color: white;
     z-index: 10;
@@ -24,7 +24,7 @@ body {
   }
   CBTree {
     position: absolute;
-    top: 1rem;
+    top: 2rem;
     left: 1rem;
     color: #281414;
     z-index: 10;
@@ -32,6 +32,16 @@ body {
     padding: 0;
   }
   div.itemAdditionContainer{
+    position: fixed;
+    top: 3rem;
+    left: 1rem;
+    background-color: white;
+    z-index: 11;
+    margin: 0;
+    padding: 0;
+  }
+
+  DrawingManager{
     position: absolute;
     top: 1rem;
     left: 15rem;

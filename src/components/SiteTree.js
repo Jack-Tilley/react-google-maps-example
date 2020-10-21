@@ -48,7 +48,7 @@ const nodes1 = [
     },
 ];
 
-const SiteTree = ({addItemIsActive, updateAddItemIsActive}) => {
+const SiteTree = ({updateDM, dM, displayDM}) => {
     const [nodes, setNodes] = useState(nodes1)
     const [checked, setChecked] = useState(['Mods'])
     const [expanded, setExpanded] = useState([])
@@ -66,11 +66,11 @@ const SiteTree = ({addItemIsActive, updateAddItemIsActive}) => {
     }
     const onClick = (e) => {
         console.log(e)
-        console.log(e['data'])
         if (e.value === '+'){
-            updateAddItemIsActive(!addItem)
+            // updateAddItemIsActive(!addItem)
             setAddItem(!addItem)
             setTarget(e)
+            updateDM()
             // return addItem ? renderAddItem() : null
             // let newNode = {
             //     value: 'NEWTHING',
@@ -90,13 +90,6 @@ const SiteTree = ({addItemIsActive, updateAddItemIsActive}) => {
         setNodes(newNodes)
     }
 
-    const renderAddItem = () => (
-        <div className="itemAdditionContainer">
-            {console.log('renderedItem')}
-            <MapItem />
-        </div>
-    )
-
     return (
         <>
         <CheckboxTree
@@ -110,7 +103,9 @@ const SiteTree = ({addItemIsActive, updateAddItemIsActive}) => {
         >
         </CheckboxTree>
         <div>
-            <MapItem isRendered={addItem} mynodes={nodes} target={target} updateNodes={updateNodes}/>
+            <MapItem isRendered={addItem} mynodes={nodes} 
+            target={target} updateNodes={updateNodes}
+            updateDM={updateDM} displayDM={displayDM}/>
         </div>
   
         </>
